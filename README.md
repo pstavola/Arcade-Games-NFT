@@ -1,13 +1,5 @@
-# Sample Hardhat Project
+# Arcade Games NFT
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+## An NFT collection of covers of the 100 best Arcade Games ever
 
-Try running some of the following tasks:
-
-```shell
-npx hardhat help
-npx hardhat test
-GAS_REPORT=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
-```
+Deployed to [Görli](https://goerli.etherscan.io/address/0x9aC3450Bbda5F666215193B21b531fEeB873071F#writeContract)
