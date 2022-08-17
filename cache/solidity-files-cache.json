@@ -602,6 +602,46 @@
         }
       }
     },
+    "lib/openzeppelin-contracts/contracts/token/ERC721/utils/ERC721Holder.sol": {
+      "lastModificationDate": 1660742562356,
+      "contentHash": "54062ff887823a306b33ea6494a220bc",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC721/utils/ERC721Holder.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/token/ERC721/IERC721Receiver.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "ERC721Holder": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "ERC721Holder.sol/ERC721Holder.json"
+        }
+      }
+    },
     "lib/openzeppelin-contracts/contracts/utils/Address.sol": {
       "lastModificationDate": 1660742562357,
       "contentHash": "02560bbb9e081911e486286da3fa761f",
@@ -794,10 +834,10 @@
         }
       }
     },
-    "script/Counter.s.sol": {
-      "lastModificationDate": 1660742389472,
-      "contentHash": "0705c52104730a78aef4aa6694175c81",
-      "sourceName": "script/Counter.s.sol",
+    "script/ArcadeGamesNFT.s.sol": {
+      "lastModificationDate": 1660745900436,
+      "contentHash": "be29907c9931fabbf5656ac48306227b",
+      "sourceName": "script/ArcadeGamesNFT.s.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
@@ -832,14 +872,14 @@
       ],
       "versionRequirement": "^0.8.13",
       "artifacts": {
-        "CounterScript": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "Counter.s.sol/CounterScript.json"
+        "ArcadeGamesNFTScript": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "ArcadeGamesNFT.s.sol/ArcadeGamesNFTScript.json"
         }
       }
     },
     "src/ArcadeGamesNFT.sol": {
-      "lastModificationDate": 1660744535950,
-      "contentHash": "e1921abe30758952b4c4d338276678c9",
+      "lastModificationDate": 1660751610438,
+      "contentHash": "9a6b5602a094e3f4cc04dc9adc654c98",
       "sourceName": "src/ArcadeGamesNFT.sol",
       "solcConfig": {
         "settings": {
@@ -889,48 +929,10 @@
         }
       }
     },
-    "src/Counter.sol": {
-      "lastModificationDate": 1660742389472,
-      "contentHash": "38901eed8ada19f21f503cdd107d84d3",
-      "sourceName": "src/Counter.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "metadata": {
-            "bytecodeHash": "ipfs"
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ]
-            }
-          },
-          "evmVersion": "london",
-          "libraries": {}
-        }
-      },
-      "imports": [],
-      "versionRequirement": "^0.8.13",
-      "artifacts": {
-        "Counter": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "Counter.sol/Counter.json"
-        }
-      }
-    },
-    "test/Counter.t.sol": {
-      "lastModificationDate": 1660742389472,
-      "contentHash": "5122f4f87ee8fbf9a2468a4c9c780b6a",
-      "sourceName": "test/Counter.t.sol",
+    "test/ArcadeGamesNFT.t.sol": {
+      "lastModificationDate": 1660751972841,
+      "contentHash": "5a3b53ab04f0d68e11c2f82cea050c2a",
+      "sourceName": "test/ArcadeGamesNFT.t.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
@@ -964,12 +966,26 @@
         "lib/forge-std/src/Vm.sol",
         "lib/forge-std/src/console.sol",
         "lib/forge-std/src/console2.sol",
-        "src/Counter.sol"
+        "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC721/ERC721.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC721/IERC721.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC721/IERC721Receiver.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC721/extensions/IERC721Enumerable.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC721/extensions/IERC721Metadata.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC721/utils/ERC721Holder.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Strings.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
+        "src/ArcadeGamesNFT.sol"
       ],
       "versionRequirement": "^0.8.13",
       "artifacts": {
-        "CounterTest": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "Counter.t.sol/CounterTest.json"
+        "ArcadeGamesNFTTest": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "ArcadeGamesNFT.t.sol/ArcadeGamesNFTTest.json"
         }
       }
     }

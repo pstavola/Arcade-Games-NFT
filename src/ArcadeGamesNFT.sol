@@ -38,7 +38,7 @@ contract ArcadeGamesNFT is
      * @param _amount amount of tokens to be minted
      */
     function mintItem(address to, uint256 _amount) public payable {
-        require(totalSupply() <= maxSupply);
+        require(totalSupply() < maxSupply, "Maximum supply of 100 has been reached");
         require(msg.value >= _amount * mintPrice, "Not enough ETH sent!");
         require(_amount <= maxPerTxn, "You cannot mint more than 5 NFTs in a single transaction");
 
