@@ -3,7 +3,7 @@ pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
 import "../src/ArcadeGamesNFT.sol";
-import "openzeppelin-contracts/contracts/token/ERC721/utils/ERC721Holder.sol";
+import "openzeppelin-contracts/contracts/token/ERC721/utils/ERC721Holder.sol"; // Needed so the test contract itself can receive NFTs
 
 contract ArcadeGamesNFTTest is Test, ERC721Holder {
     //the identifier of the fork
@@ -17,20 +17,59 @@ contract ArcadeGamesNFTTest is Test, ERC721Holder {
         nft = new ArcadeGamesNFT();
     }
 
-    // The contract is deployed successfully
+    // a. The contract is deployed successfully.
     function testCreateContract() public {
         nft.tokenIdCounter();
     }
 
-    // The deployed address is set to the owner
+    // b. The deployed address is set to the owner.
     function testOwner() public {
         assertEq(nft.owner(), address(this));
     }
 
-    // No more than 100 tokens can be minted
+    // c. No more than 100 tokens can be minted.
     function testFailMintMoreThan100() public {
-        for(uint256 i; i <= 100; i++){
-            nft.mintItem{value:0.01 ether}(address(this), 1);
+        for(uint256 i; i <= 20; i++){
+            nft.mintItem{value:0.05 ether}(address(this), 5);
         }
+    }
+
+    // d. A token can not be minted if less value than cost (0.01) is provided.
+    function testCannotMintForLessThanMinimumValue(uint256 _value) public {
+        vm.expectRevert(abi.encodePacked("Not enough ETH sent!"));
+
+        _value = bound(_value, 1 wei, 9999999999999999 wei);
+
+        nft.mintItem{value:_value}(address(this), 1);
+    }
+
+    // e. No more than five tokens can be minted in a single transaction.
+    function testCannotMintMoreThan5TokensInASingleTxn() public {
+        vm.expectRevert(abi.encodePacked("You cannot mint more than 5 NFTs in a single transaction"));
+
+        nft.mintItem{value:0.01 ether}(address(this), 6);
+    }
+
+    // f. The owner can withdraw the funds collected from the sale.
+    function testOwnerCanWithdraw() public {
+
+        nft.mintItem{value:0.05 ether}(address(this), 5);
+
+        nft.withdraw();
+    }
+
+    // Needed so the test contract itself can receive ether when withdrawing
+    receive() external payable {}
+
+    // g. You can mint one token provided the correct amount of ETH.
+     function testMint1Token() public {
+
+        nft.mintItem{value:0.01 ether}(address(this), 1);
+    }
+
+    // h. You can mint three tokens in a single transaction provided the correct amount of ETH.
+     function testMint3Tokens() public {
+
+        nft.mintItem{value:0.03 ether}(address(this), 3);
     }
 }
