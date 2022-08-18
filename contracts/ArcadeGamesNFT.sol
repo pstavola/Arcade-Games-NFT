@@ -21,43 +21,79 @@ contract ArcadeGamesNFT is
     /* ========== GLOBAL VARIABLES ========== */
 
     uint256 public tokenIdCounter = 0; //token id counter incremented per each mint
-    uint256 public mintPrice = 0.01 ether; //mint price
-    uint256 public constant maxSupply = 100; //max NFT supply
-    uint256 public maxPerTxn = 5; //max quantity of NFTs minted in one transaction
-    string public URI = "https://ipfs.io/ipfs/QmTYnT6ZCa9Gke6iEh1QqYgXbbST4CTeKHboURZ7VYU79A"; //IPFS address of the art collection
+    uint256 public constant MINT_PRICE = 0.01 ether; //mint price
+    uint256 public constant MAX_SUPPLY = 100; //max NFT supply
+    uint256 public constant MAX_PER_TXN = 5; //max quantity of NFTs minted in one transaction
+    string public baseTokenURI;
+
+    /* ========== MODIFIERS ========== */
+
+    /**
+     * @notice Based on Mint Price it checks that enough ETH has been sent.
+     */
+    modifier minValue(uint256 _amount) {
+        require(msg.value >= _amount * MINT_PRICE, "Not enough ETH sent!");
+        _;
+    }
 
     /* ========== CONSTRUCTOR ========== */
 
-    constructor() ERC721("ArcadeGamesNFT", "AGN") {}
+    constructor(string memory baseURI) ERC721("Arcade Games", "ARCG") {
+        setBaseURI(baseURI);
+    }
     
     /* ========== FUNCTIONS ========== */
 
     /**
-     * @notice mints the amount of token requested by iterating parent _safeMint and _setTokenURI functions. ID counter is increased each minted token. Checks that max tokens supply, max amount of tokens per txn and mint price are correct.
-     * @param to address to send tokens to
-     * @param _amount amount of tokens to be minted
+     * @notice mints token using parent _safeMint function. ID counter is increased each minted token. Checks that max tokens supply and mint price are respected.
      */
-    function mintItem(address to, uint256 _amount) public payable {
-        require(totalSupply() < maxSupply, "Maximum supply of 100 has been reached");
-        require(_amount <= maxPerTxn, "You cannot mint more than 5 NFTs in a single transaction");
-        require(msg.value >= _amount * mintPrice, "Not enough ETH sent!");
+    function mintItem() public payable minValue(1) {
+        require(totalSupply() < MAX_SUPPLY, "Maximum supply of 100 has been reached");
 
-        for(uint256 i=0; i < _amount; i++){
-            tokenIdCounter++;
-            _safeMint(to, tokenIdCounter);
-            _setTokenURI(tokenIdCounter, URI);
-        }
+        tokenIdCounter++;
+        _safeMint(msg.sender, tokenIdCounter);
     }
 
+    /**
+     * @notice mints the amount of token requested by iterating over mintItem() function. Checks that max amount of tokens per txn and mint price are correct.
+     * @param _amount amount of tokens to be minted
+     */
+    function mintItem(uint256 _amount) public payable minValue(_amount) {
+        require(_amount <= MAX_PER_TXN, "You cannot mint more than 5 NFTs in a single transaction");
+
+        for(uint256 i=0; i < _amount; i++){
+            mintItem();
+        }
+    }
 
     /**
      * @notice transfers all the funds collected to owner address. Only owner can invoke this
      */
     function withdraw()
         public
+        payable
         onlyOwner
     {
-        payable(msg.sender).transfer(address(this).balance);
+        uint balance = address(this).balance;
+        require(balance > 0, "No ether left to withdraw");
+
+        (bool sent, ) = payable(msg.sender).call{value: address(this).balance}("");
+        require(sent, "Transfer failed.");
+    }
+
+    /**
+     * @notice Set baseTokenURI state variable.
+     * @param _baseTokenURI URI address
+     */
+    function setBaseURI(string memory _baseTokenURI) public onlyOwner {
+        baseTokenURI = _baseTokenURI;
+    }
+
+    /**
+     * @notice override required by Solidity.
+     */
+    function _baseURI() internal view virtual override returns (string memory) {
+        return baseTokenURI;
     }
 
     /**

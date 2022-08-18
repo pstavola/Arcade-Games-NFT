@@ -6,15 +6,12 @@ import "../../contracts/ArcadeGamesNFT.sol";
 import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol"; // Needed so the test contract itself can receive NFTs
 
 contract ArcadeGamesNFTTest is Test, ERC721Holder {
-    //the identifier of the fork
-    //uint256 mainnetFork;
-    //string MAINNET_RPC_URL = 'https://eth-mainnet.g.alchemy.com//v2/ALCHEMY_KEY';
 
     ArcadeGamesNFT public nft;
+    string public constant baseTokenURI = "ipfs://QmTYnT6ZCa9Gke6iEh1QqYgXbbST4CTeKHboURZ7VYU79A";
 
     function setUp() public {
-        //mainnetFork = vm.createFork(MAINNET_RPC_URL);
-        nft = new ArcadeGamesNFT();
+        nft = new ArcadeGamesNFT(baseTokenURI);
     }
 
     // a. The contract is deployed successfully.
@@ -30,12 +27,12 @@ contract ArcadeGamesNFTTest is Test, ERC721Holder {
     // c. No more than 100 tokens can be minted.
     function testCannotMintMoreThan100() public {
         for(uint256 i; i <= 19; i++){
-            nft.mintItem{value:0.05 ether}(address(this), 5);
+            nft.mintItem{value:0.05 ether}(5);
         }
 
         vm.expectRevert(abi.encodePacked("Maximum supply of 100 has been reached"));
 
-        nft.mintItem{value:0.01 ether}(address(this), 1);
+        nft.mintItem{value:0.01 ether}();
     }
 
     // d. A token can not be minted if less value than cost (0.01) is provided.
@@ -44,20 +41,23 @@ contract ArcadeGamesNFTTest is Test, ERC721Holder {
 
         _value = bound(_value, 1 wei, 9999999999999999 wei);
 
-        nft.mintItem{value:_value}(address(this), 1);
+        nft.mintItem{value:_value}();
     }
 
     // e. No more than five tokens can be minted in a single transaction.
     function testCannotMintMoreThan5TokensInASingleTxn() public {
         vm.expectRevert(abi.encodePacked("You cannot mint more than 5 NFTs in a single transaction"));
 
-        nft.mintItem{value:0.01 ether}(address(this), 6);
+        nft.mintItem{value:0.06 ether}(6);
     }
 
     // f. The owner can withdraw the funds collected from the sale.
     function testOwnerCanWithdraw() public {
-        nft.mintItem{value:0.05 ether}(address(this), 5);
+        address alice = makeAddr("alice");
+        hoax(alice);
+        nft.mintItem{value:0.05 ether}(5);
 
+        vm.prank(nft.owner());
         nft.withdraw();
     }
 
@@ -66,12 +66,12 @@ contract ArcadeGamesNFTTest is Test, ERC721Holder {
 
     // g. You can mint one token provided the correct amount of ETH.
      function testMint1Token() public {
-        nft.mintItem{value:0.01 ether}(address(this), 1);
+        nft.mintItem{value:0.01 ether}();
     }
 
     // h. You can mint three tokens in a single transaction provided the correct amount of ETH.
      function testMint3Tokens() public {
-        nft.mintItem{value:0.03 ether}(address(this), 3);
+        nft.mintItem{value:0.03 ether}(3);
     }
 
     // i. Check the balance of an account that minted three tokens.
@@ -79,7 +79,7 @@ contract ArcadeGamesNFTTest is Test, ERC721Holder {
         address alice = makeAddr("alice");
         hoax(alice);
         uint256 preBalance = alice.balance;
-        nft.mintItem{value:0.03 ether}(alice, 3);
+        nft.mintItem{value:0.03 ether}(3);
         uint256 postBalance = alice.balance;
         assertEq(preBalance - 0.03 ether, postBalance);
     }

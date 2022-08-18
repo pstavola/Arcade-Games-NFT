@@ -13,8 +13,8 @@
   },
   "files": {
     "contracts/ArcadeGamesNFT.sol": {
-      "lastModificationDate": 1660802214488,
-      "contentHash": "2dec64986cf8ac033c4576dbca676e4f",
+      "lastModificationDate": 1660821044975,
+      "contentHash": "39959861aaeee6af560990795265cf04",
       "sourceName": "contracts/ArcadeGamesNFT.sol",
       "solcConfig": {
         "settings": {
@@ -931,8 +931,8 @@
       }
     },
     "test/foundry/ArcadeGamesNFT.t.sol": {
-      "lastModificationDate": 1660810532066,
-      "contentHash": "3f730f58b1455ab6eccdc646abe6f799",
+      "lastModificationDate": 1660821064007,
+      "contentHash": "1ec64bd4137b5e292d0caf91de178562",
       "sourceName": "test/foundry/ArcadeGamesNFT.t.sol",
       "solcConfig": {
         "settings": {
