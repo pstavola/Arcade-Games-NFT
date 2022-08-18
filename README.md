@@ -4,4 +4,4 @@
   
 Hardhat+Foundry  
   
-Deployed to [Görli](https://goerli.etherscan.io/address/0x129f8Fc9CFBe791CBbB3774a5165ccf1C2947527#writeContract)
+Deployed to [Görli](https://goerli.etherscan.io/address/0xa1ED5d859744402156d7BcBc3FE1bcec2D765126#code)
