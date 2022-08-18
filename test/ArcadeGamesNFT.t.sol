@@ -18,7 +18,7 @@ contract ArcadeGamesNFTTest is Test, ERC721Holder {
     }
 
     // a. The contract is deployed successfully.
-    function testCreateContract() public {
+    function testCreateContract() public view {
         nft.tokenIdCounter();
     }
 
@@ -28,10 +28,14 @@ contract ArcadeGamesNFTTest is Test, ERC721Holder {
     }
 
     // c. No more than 100 tokens can be minted.
-    function testFailMintMoreThan100() public {
-        for(uint256 i; i <= 20; i++){
+    function testCannotMintMoreThan100() public {
+        for(uint256 i; i <= 19; i++){
             nft.mintItem{value:0.05 ether}(address(this), 5);
         }
+
+        vm.expectRevert(abi.encodePacked("Maximum supply of 100 has been reached"));
+
+        nft.mintItem{value:0.01 ether}(address(this), 1);
     }
 
     // d. A token can not be minted if less value than cost (0.01) is provided.
@@ -52,7 +56,6 @@ contract ArcadeGamesNFTTest is Test, ERC721Holder {
 
     // f. The owner can withdraw the funds collected from the sale.
     function testOwnerCanWithdraw() public {
-
         nft.mintItem{value:0.05 ether}(address(this), 5);
 
         nft.withdraw();
@@ -63,13 +66,21 @@ contract ArcadeGamesNFTTest is Test, ERC721Holder {
 
     // g. You can mint one token provided the correct amount of ETH.
      function testMint1Token() public {
-
         nft.mintItem{value:0.01 ether}(address(this), 1);
     }
 
     // h. You can mint three tokens in a single transaction provided the correct amount of ETH.
      function testMint3Tokens() public {
-
         nft.mintItem{value:0.03 ether}(address(this), 3);
+    }
+
+    // i. Check the balance of an account that minted three tokens.
+     function testCheckBalance() public {
+        address alice = makeAddr("alice");
+        hoax(alice);
+        uint256 preBalance = alice.balance;
+        nft.mintItem{value:0.03 ether}(alice, 3);
+        uint256 postBalance = alice.balance;
+        assertEq(preBalance - 0.03 ether, postBalance);
     }
 }

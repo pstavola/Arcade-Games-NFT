@@ -930,8 +930,8 @@
       }
     },
     "test/ArcadeGamesNFT.t.sol": {
-      "lastModificationDate": 1660756311351,
-      "contentHash": "f7e164e39afbc42b312c43f311dbf9e2",
+      "lastModificationDate": 1660799944990,
+      "contentHash": "43c1a5a29d1adf5c000988a56f2d621e",
       "sourceName": "test/ArcadeGamesNFT.t.sol",
       "solcConfig": {
         "settings": {
