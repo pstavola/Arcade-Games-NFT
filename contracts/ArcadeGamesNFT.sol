@@ -43,24 +43,24 @@ contract ArcadeGamesNFT is
     /* ========== FUNCTIONS ========== */
 
     /**
-     * @notice mints token using parent _safeMint function. ID counter is increased each minted token. Checks that max tokens supply and mint price are respected.
+     * @notice mints token using function overload.
      */
-    function mintItem() public payable minValue(1) {
-        require(totalSupply() < MAX_SUPPLY, "Maximum supply of 100 has been reached");
-
-        tokenIdCounter++;
-        _safeMint(msg.sender, tokenIdCounter);
+    function mintItem() public payable {
+        mintItem(1);
     }
 
     /**
-     * @notice mints the amount of token requested by iterating over mintItem() function. Checks that max amount of tokens per txn and mint price are correct.
+     * @notice mints the amount of token requested by iterating parent _safeMint function. Checks that max amount of tokens per txn, max tokens supply and mint price are correct. ID counter is increased each minted token.
      * @param _amount amount of tokens to be minted
      */
-    function mintItem(uint256 _amount) public payable minValue(_amount) {
+    function mintItem(uint256 _amount) public payable {
+        require(msg.value >= _amount * MINT_PRICE, "Not enough ETH sent!");
+        require(totalSupply() < MAX_SUPPLY, "Maximum supply of 100 has been reached");
         require(_amount <= MAX_PER_TXN, "You cannot mint more than 5 NFTs in a single transaction");
 
         for(uint256 i=0; i < _amount; i++){
-            mintItem();
+            tokenIdCounter++;
+            _safeMint(msg.sender, tokenIdCounter);
         }
     }
 
