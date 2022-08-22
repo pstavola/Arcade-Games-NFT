@@ -24,7 +24,7 @@ contract ArcadeGamesNFT is
     uint256 public constant MINT_PRICE = 0.01 ether; //mint price
     uint256 public constant MAX_SUPPLY = 100; //max NFT supply
     uint256 public constant MAX_PER_TXN = 5; //max quantity of NFTs minted in one transaction
-    string public baseTokenURI;
+    string public baseTokenURI = "ipfs://QmTYnT6ZCa9Gke6iEh1QqYgXbbST4CTeKHboURZ7VYU79A"; // IPFS address of the art collection;
 
     /* ========== MODIFIERS ========== */
 
@@ -38,9 +38,7 @@ contract ArcadeGamesNFT is
 
     /* ========== CONSTRUCTOR ========== */
 
-    constructor(string memory baseURI) ERC721("Arcade Games", "ARCG") {
-        setBaseURI(baseURI);
-    }
+    constructor() ERC721("Arcade Games", "ARCG") {}
     
     /* ========== FUNCTIONS ========== */
 

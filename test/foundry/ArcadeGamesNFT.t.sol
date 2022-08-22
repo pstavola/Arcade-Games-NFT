@@ -8,10 +8,10 @@ import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol"; // Needed 
 contract ArcadeGamesNFTTest is Test, ERC721Holder {
 
     ArcadeGamesNFT public nft;
-    string public constant baseTokenURI = "ipfs://QmTYnT6ZCa9Gke6iEh1QqYgXbbST4CTeKHboURZ7VYU79A";
+    //string public constant baseTokenURI = "ipfs://QmTYnT6ZCa9Gke6iEh1QqYgXbbST4CTeKHboURZ7VYU79A";
 
     function setUp() public {
-        nft = new ArcadeGamesNFT(baseTokenURI);
+        nft = new ArcadeGamesNFT();
     }
 
     // a. The contract is deployed successfully.
