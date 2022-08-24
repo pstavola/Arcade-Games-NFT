@@ -13,8 +13,8 @@
   },
   "files": {
     "contracts/ArcadeGamesNFT.sol": {
-      "lastModificationDate": 1661182206458,
-      "contentHash": "0927d726879cd2ccdc58ced3eb72e0d6",
+      "lastModificationDate": 1661246239801,
+      "contentHash": "f101700618d7380c09bb65b53c286bd8",
       "sourceName": "contracts/ArcadeGamesNFT.sol",
       "solcConfig": {
         "settings": {

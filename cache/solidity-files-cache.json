@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/radical/git/Arcade-Games-NFT/contracts/ArcadeGamesNFT.sol": {
-      "lastModificationDate": 1661182206459,
-      "contentHash": "0927d726879cd2ccdc58ced3eb72e0d6",
+      "lastModificationDate": 1661247877016,
+      "contentHash": "f101700618d7380c09bb65b53c286bd8",
       "sourceName": "contracts/ArcadeGamesNFT.sol",
       "solcConfig": {
         "version": "0.8.13",
