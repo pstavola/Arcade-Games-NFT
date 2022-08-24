@@ -12,3 +12,7 @@ artifacts
 #Foundry files
 out
 forge-cache
+
+crytic-export/
+yarn.lock
+.DS_Store
