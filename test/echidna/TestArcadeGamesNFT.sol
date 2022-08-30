@@ -3,7 +3,7 @@ pragma solidity ^0.8.13;
 
 import "../../contracts/ArcadeGamesNFT.sol";
 
-contract TestArcadaGamesNFT {
+contract TestArcadeGamesNFT {
     ArcadeGamesNFT nft;
 
     constructor() {
